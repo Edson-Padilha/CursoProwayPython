@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Cadastro de Tipo de Pessoa{% endblock %}
+
+{% block corpo %}
+
+<div class="form-control">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="text-center">
+            <h3>
+                <label class="text-primary">Cadastro de Tipo de Pessoa</label>
+                                
+            </h3>
+            <div>
+                <input class="form-control" name="descricao" type="text" placeholder="Descrição" maxlength="50" required>
+            </div>
+        </div>
+        {% include 'acoes_form.html' %}
+    </form>
+</div>
+{% endblock %}

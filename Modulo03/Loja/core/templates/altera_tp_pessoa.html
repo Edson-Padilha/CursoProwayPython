@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Altera Tipo de Pessoa{% endblock %}
+
+{% block corpo %}
+
+<div class="form-control">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="text-center">
+            <h3>
+                <label class="text-primary">Altera Tipo de Pessoa - {{ tipo.descricao }}</label>                
+            </h3>
+            <div>
+                <input class="form-control" name="descricao" value="{{ tipo.descricao }}" type="text" placeholder="Descrição" maxlength="50" required>
+            </div>
+        </div>
+        
+        {% include 'acoes_form.html' %}
+    </form>
+</div>
+{% endblock %}

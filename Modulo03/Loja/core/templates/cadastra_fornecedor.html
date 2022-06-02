@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Cadastra Fornecedor{% endblock %}
+
+{% block corpo %}
+
+<div class="form-control">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="text-center">
+            <h3>
+                <label class="text-primary">Cadastra Fornecedor</label>
+            </h3>
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input class="form-control" name="nome" type="text" placeholder="Nome do cliente" maxlength="50" required>
+            </div>
+            <div class="mb-3">
+                <label for="fantasia" class="form-label">Fantasia</label>
+                <input class="form-control" name="fantsia" type="text" placeholder="Nome Fantasia" maxlength="100" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input class="form-control" name="email" type="email" placeholder="E-mail do cliente" maxlength="100" required>
+            </div>
+            <div class="mb-3">
+                <label for="cpf_cnpj" class="form-label">CPF/CNPJ</label>
+                <input class="form-control" name="cpfcnpj" type="text" placeholder="CPF/CNPJ do cliente" maxlength="14" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="tp_pessoa" class="form-label">Tipo Pessoa</label>
+                <select name="tp_pessoa" id="tp_pessoa" class="form-select">
+                    <option value="0">Selecione</option>
+                    {% for tp in tipoPessoa %}
+                    <option value="{{ tp.id }}">{{ tp.descricao }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estados</label>
+                <select name="estado" id="estado" class="form-select">
+                    <option value="0">Selecione</option>
+                    {% for estado in estado %}
+                    <option value="{{ estado.id }}">{{ estado.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="cidade" class="form-label">Cidadess</label>
+                <select name="cidade" id="cidades" class="form-select">
+                    <option value="0">Selecione</option>
+                    {% for cidade in cidade %}
+                    <option value="{{ cidade.id }}">{{ cidade.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+        </div>
+        {% include 'acoes_form.html' %}
+    </form>
+</div>
+{% endblock %}

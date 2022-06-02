@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Login{% endblock %}
+
+{% block corpo %}
+
+
+
+<form  method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="text-center">
+        <h3>
+            <label class="text-primary">Formulário de Login</label>
+        </h3>
+    </div><div class="form-control">
+    
+    {% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <div class="alert alert-info alert-dismissible fade show">
+        <p>Para visualizar a página é necessário estar logado...</p>
+        <button class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+    </div>
+    {% endif %}
+    {% endif %}
+    {% if form.errors %}
+    <div class="alert alert-danger alert-dismissible fade show">
+        <p>Usuário/Senha inválidos. Tente novamente.</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+    <div class="mb-3">
+        <label for="nome" class="form-label">Usuário</label>
+        <input type="text" name ="username" class="form-control" id="nome" maxlength="150" required/>
+    </div>
+    <div class="mb-3">
+        <label for="senha" class="form-label">Senha</label>
+        <input class="form-control" type="password" name="password" id="senha" required/>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Acessar">
+    <input type="hidden" name="next" value="{{ next }}">
+    <p><a href="{% url 'password_reset' %}">Esqueceu a Senha?</a></p>
+</form>
+
+</div>
+
+{% endblock %}

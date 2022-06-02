@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block titulo %}Exclui Tipo de Pessoa{% endblock %}
+
+{% block corpo %}
+<div class="form-control">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="text-center">
+            <h3>
+                <label class="text-primary">Exclui de Tipo de Pessoa - {{ tipo.descricao }}</label>
+                                
+            </h3>
+            <div>
+                <input class="form-control" name="descricao" type="text" placeholder="Descrição" value="{{ tipo.descricao }}" maxlength="50" disable>
+            </div>
+        </div>
+        {% include 'acoes_form_exclui.html' %}
+    </form>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-danger">
+          <h5 class="modal-title text-light" id="exampleModalLabel">Excluir Registro</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Deseja realmente exluir o Tipo de Pessoa <label class="text-danger">{{ tipo.descricao }}?</label>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="modal-footer">
+          <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Exclui</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+{% endblock %}

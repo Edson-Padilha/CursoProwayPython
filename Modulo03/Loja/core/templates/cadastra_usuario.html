@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Cadastra Usuarios{% endblock %}
+
+{% block corpo %}
+
+<div class="form-control">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="text-center">
+            <h3>
+                <label class="text-primary">Cadastra Usuarios</label>
+            </h3>
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input class="form-control" name="nome" type="text" placeholder="Nome do cliente" maxlength="50" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input class="form-control" name="email" type="email" placeholder="E-mail do cliente" maxlength="50" required>
+            </div>
+            <div class="mb-3">
+                <label for="cpf_cnpj" class="form-label">Login</label>
+                <input class="form-control" name="cpfcnpj" type="text" placeholder="CPF/CNPJ do cliente" maxlength="50" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="tp_pessoa" class="form-label">Senha</label>
+                <input class="form-control" name="cpfcnpj" type="text" placeholder="CPF/CNPJ do cliente" maxlength="50" required>
+            </div>
+            
+        </div>
+        {% include 'acoes_form.html' %}
+    </form>
+</div>
+{% endblock %}

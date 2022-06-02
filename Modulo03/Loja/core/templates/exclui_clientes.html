@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Exclui Clientes{% endblock %}
+
+{% block corpo %}
+
+<div class="form-control">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="text-center">
+            <h3>
+                <label class="text-primary">Exclui Clientes - {{ cliente.nome }}</label>
+            </h3>
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input class="form-control" value="{{ cliente.nome }}" name="nome" type="text" placeholder="Nome do cliente" maxlength="50" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input class="form-control" value="{{ cliente.email }}" name="email" type="email" placeholder="E-mail do cliente" maxlength="50" required>
+            </div>
+            <div class="mb-3">
+                <label for="cpf_cnpj" class="form-label">CPF/CNPJ</label>
+                <input class="form-control" value="{{ cliente.cpfcnpj }}" name="cpfcnpj" type="text" placeholder="CPF/CNPJ do cliente" maxlength="50" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="tp_pessoa" class="form-label">Tipo Pessoa</label>
+                <select name="tp_pessoa" id="tp_pessoa" class="form-select">
+                    <option value="0">Selecione</option>
+                    {% for tp in tipo %}
+                    <option value="{{ tp.id }}">{{ tp.descricao }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estados</label>
+                <select name="estado" id="estado" class="form-select">
+                    <option value="{{ estado.id }}">Selecione</option>
+                    {% for estado in estado %}
+                    <option value="{{ estado.id }}">{{ estado.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="cidade" class="form-label">Cidades</label>
+                <select name="cidade" id="cidade" class="form-select">
+                    <option value="0">Selecione</option>
+                    {% for cidade in cidade %}
+                    <option value="{{ cidade.id }}">{{ cidade.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+        </div>
+        {% include 'acoes_form.html' %}
+    </form>
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-danger">
+              <h5 class="modal-title text-light" id="exampleModalLabel">Excluir Registro</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Deseja realmente exluir o Cliente <label class="text-danger">{{ cliente.nome }}?</label>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="modal-footer">
+              <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Exclui</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+            </form>
+            
+            
+          </div>
+        </div>
+      </div>
+</div>
+{% endblock %}

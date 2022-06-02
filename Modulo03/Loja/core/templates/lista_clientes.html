@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block titulo %}Lista de Clientes{% endblock %}
+
+{% block corpo %}
+ <div class="text-center">
+     <h3>
+         <label class="text-primary">Lista de Clientes</label>
+     </h3>
+ </div>
+ {% if user.is_authenticated %}
+ <div class="container mt-4">
+     <button class="btn btn-primary" onclick="location.href='cadastra-cliente'">Novo</button>
+ </div> 
+ {% include 'form_pesquisa.html' %}
+ {% endif %}
+
+ <div class="container mt-5">
+     {% if total > 0 %}
+     {% if user.is_authenticated %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CPF/CNPJ</th>
+                <th>E-mail</th>
+                <th>Tipo Pessoa</th>
+                <th>UF</th>
+                <th>Cidade</th>
+                <th class="text-center">Acoes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in porPagina %}
+            <tr>
+                <td>{{ cliente.id }}</td>
+                <td>{{ cliente.nome }}</td>
+                <td>{{ cliente.cpfcnpj }}</td>
+                <td>{{ cliente.email }} </td>
+                <td>{{ cliente.tp_pessoa }}</td>
+                <td>{{ cliente.estado }}</td>
+                <td>{{ cliente.cidade }}</td>
+                <td class="text-center">
+                    <button class="btn btn-warning" onclick="location.href='altera-clientes/{{ cliente.id }}'">Alterar</button>
+                    <button class="btn btn-danger" onclick="location.href='exclui-clientes'">Excluir</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <label>Total de Registros: {{ total }}</label>
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+    {% else %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in porPagina %}
+            <tr>
+                <td>{{ cliente.id }}</td>
+                <td>{{ cliente.nome }}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+    {% endif %}
+    {% if user.is_authenticated %}
+    {% include 'paginacao.html' %}
+    {% endif %}
+    {% elif procura %}
+    {% include 'sem_registro_encontrado.html' %}
+    {% else %}
+    {% include 'sem_item_cadastrado.html' %}
+    {% endif %}
+</div>
+{% endblock %}

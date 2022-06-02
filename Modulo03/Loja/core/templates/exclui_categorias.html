@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block titulo %}Excluir Categoria{% endblock %}
+
+{% block corpo %}
+ <div class="text-center">
+     <h3>
+         <label class="text-primary">Excluir categoria - {{ categoria.nome }}</label>
+     </h3>
+ </div>
+ <div class="container mt-4">
+     <button class="btn btn-primary" onclick="location.href='cadastra-categorias'">Novo</button>
+
+ </div>
+ <div class="container mt-4">
+     {% if total > 0 %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th class="text-center">Acoes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categoria in categoria %}
+            <tr>
+                <td>{{ categoria.nome }}</td>
+                <td class="text-center">
+                    <button class="btn btn-warning" onclick="location.href='altera-categorias/{{ categoria.id }}'">Alterar</button>
+                    <button class="btn btn-danger" onclick="location.href='exclui-categorias/{{ categoria.id }}'">Excluir</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    <label>Total de Registros: {{ total }}</label>
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+    {% else %}
+    {% include 'sem_item_cadastrado.html' %}
+    {% endif %}
+</div>
+{% endblock %}
