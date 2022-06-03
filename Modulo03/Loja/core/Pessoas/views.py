@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from ViewsProject.views import efetua_paginacao
 from Local.models import Estado, Cidade
+from ViewsProject.views import Inicio
 from .models import Cliente, Fornecedor, TpPessoa, Usuario
 from .forms import FormCliente, FormFornecedor, FormTpPessoa, FormUsuario
 # Create your views here.
@@ -26,7 +27,7 @@ def lista_tp_pessoas(request):
      }
     return render(request,'lista_tp_pessoa.html', dados)
 
-@login_required
+
 def cadastra_tp_pessoas(request):
     
     if request.method == 'POST':
@@ -36,7 +37,7 @@ def cadastra_tp_pessoas(request):
             return redirect(lista_tp_pessoas)
     return render(request,'cadastra_tp_pessoa.html')
 
-@login_required
+
 def altera_tp_pessoa(request, id):
     tipo = TpPessoa.objects.get(id=id)
     if request.method == 'POST':
@@ -46,7 +47,7 @@ def altera_tp_pessoa(request, id):
         return redirect(lista_tp_pessoas)
     return render(request, 'altera_tp_pessoa.html', {'tipo': tipo})
 
-@login_required
+
 def exclui_tp_pessoa(request, id):
     tipo = TpPessoa.objects.get(id=id)
     
@@ -227,10 +228,15 @@ def lista_usuarios(request):
 def cadastra_usuarios(request):
     
     if request.method == 'POST':
-        form = FormUsuario(request.POST or None)
-        if form.is_valid():
-            form.save()
-            return redirect(lista_usuarios)
+        primeiro_nome = request.POST('nome')
+        nome_usuario = request.POST('login')
+        email_usuario = request.POST('email')
+        senha_usuario = request.POSt('senha')
+
+
+        novo_usuario = User.objects.create_user(first_name=primeiro_nome, username=nome_usuario, email=email_usuario, password=senha_usuario)
+        novo_usuario.save()
+        return redirect(Inicio)
     return render (request,'cadastra_usuarios.html')
 
 def altera_usuarios(request,id):

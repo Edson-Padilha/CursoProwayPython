@@ -43,21 +43,23 @@ def altera_estados(request,id):
 def exclui_estado(request):
     return render(request,'exclui_estados.html')
 
-def lista_cidades(request):
+def lista_cidades(request,id):
     procura = request.GET.get('procura')
 
     if procura:
         cidade = Cidade.objects.filter(nome__icontains=procura)
     else:
-        cidade = Cidade.objects.all()
+        estado = Estado.objects.filter(id=id)
+        cidade = Cidade.objects.filter(estado_id=estado.id)
     total = cidade.count
+ 
     dados ={
         'cidade': cidade,
         'total': total,
         'procura': procura,
         'porPagina': efetua_paginacao(request, cidade)
     }
-    return render(request,'lista_cidades.html',dados)
+    return HttpResponse(request,'lista_cidades.html',dados)
 
 def cadastra_cidades(request):
     estado = Estado.objects.all()

@@ -38,7 +38,7 @@
                 <select name="estado" id="estado" class="form-select">
                     <option value="0">Selecione o Estado</option>
                     {% for estado in estado %}
-                    <option value="{{ estado.id }}">{{ estado.sigla }}</option>
+                    <option value="{{ estado.id }}" selected>{{ estado.sigla }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -57,13 +57,16 @@
     </form>
     <script type="text/javascript">
         $(document).ready(function(){
+    
         $('#estado').on('change', function(){
-            alert('Alterou Estado');
-            $('#cidade').append('<option value="1">Blumenau</option><option value="2">Jaraguá do Sul</option>')
+            $('#cidade').empty();
+            $('#cidade').append('<option value="0" selected>Selecione uma cidade</option>')
             $.get('/busca_cidades/' + $(this).val(), function(retorno){
-                retorno = retorno.replace('[','').replace(']','').split(',');
-                for (i = 0; i < retorno.length; i++){
-                    $('#cidade').append('<option>'+ retorno[i] + '</option>');
+                retorno = retorno.replace('{','').replace('}','').split(',');
+                for (i = 0; i + retorno.length; i++){
+                    $('#cidade').append('<option value="' 
+                    + retorno[i].trim().substring(0,retorno[i].indexOf(':')).replace(':','') + '"/>' 
+                    + retorno[i].substring(retorno[i].indexOf(':')+1).replace(/'/g,'').trim() + '</option>');
                 }
             })
         })
