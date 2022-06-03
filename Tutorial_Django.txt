@@ -1,0 +1,121 @@
+python -m venv nome # Cria ambiente virtual
+cd .\nome # Entrar na pasta
+.\Scripts\activate # Ativa versão do Djando
+pip install django # Instala django somente nesta aplicação isolada
+cd c:\Projetos\smjtoner\
+pip freeze #Verifica a versão instalada
+
+django-admin startproject Meu_Projeto
+
+python manage.py runserver
+ 
+django-admin startapp Meu_app
+cd app
+
+python manage.py migrate
+
+python manage.py createsuperuser --username admin
+
+Irem setting e configurar o idioma 'pt-br' e timezone 'America/Sao_Paulo'
+Quando criar usuários, lembrar de desmarcar a opção Staff para não terem acesso a página admin.
+
+Após criar app, ir em settings e colocar o app em apps instalados.
+
+Criar tabelas com o models:
+Ir em core models, 
+
+titulo.models = Charfield(maxleght=100)
+descricao.models = TextField(blank=True, null=True) => Text sem limite de caracteres e pode aceitar nulo.
+data_evento = models.DateTimeField()
+data_criacao = models.DateTimeField(auto_now=True) => Registra de forma automática a data
+
+
+
+python manage.py makemigrations core
+
+Comando migrate já registra no banco de dados
+
+Agora registrar no Admim
+
+from app.models import classe
+
+admin.site.register(Evento)
+ python manage.py runserver
+
+Mostrar campos para aparecer
+
+No arquivo admin, criar uma classe 
+class EventoAdmin(admin.ModelAdmin):
+    list_display = ('titulo','data_evento','data_criacao')
+
+Agora precisa associar para aparecer
+admin.site.register(Evento,EventoAdmin)
+
+Para renomear nome do campo
+Vai em models e coloca verbose_name= novo nome
+
+importar:
+ from django.contrib.auth.models import User
+
+Depois vai em urls:
+Criar uma rota nova, mas precisa apontar para algum lugar, para um método que retorne alguma coisa na tela.
+Entrar em Views do core e criar função:
+importar HttpResponse
+Ex: def hello(request):
+return HttpResponse('Hello Word')
+
+Voltar para URL´s e importar ex:
+from core import views
+
+É possível passar parâmetros em url, ex:
+path('hello/<nome>/',views.hello)
+
+No arquivo views, coloca{}.format(nome)
+Acrescentar nome no parâmetro da função
+
+ESTRUTURA BÁSICA
+O que são os arquivos:
+- DJANGO-ADMIN: django-admin --help
+Todos os comandos são executados aqui.
+- MANAGE:
+Ele delega as tarefas para o Django-Admin, não executa as tarefas
+Responsável por colocar o pacote do projeto no sys.path
+Ele define a variável de ambiente DJANGO_SETTINGS_MODULE que então aponta para o arquivo settings.py
+
+- WSGI:
+Interface de porta de entrada do servidor web
+Serve de interface do servidor web e a aplicação web
+
+- SETTINGS: 
+- URLS:
+- VIEWS:
+- MODELS:
+- ADMIN:
+- STATIC:
+- TEMPLATES: 
+
+
+abrir shampp
+apache
+mysql
+
+acessar navegador mysql
+
+acessar settings
+alterar caminho banco
+python manage.py migrate
+
+criar arquivo model.py
+
+from django import forms
+from django.forms import ModelForm
+from .models import Categoria, Item
+
+class FormCategoria(ModelForm):
+    # Dizendo que está trabalhando com banco de dados
+    class Meta: 
+        # Diz qual a tabela principal
+        model = Categoria 
+        # Campos que irá mostrar os nomes das colunas
+        fields = ['id','nome']
+        db_table = 'categoria'
