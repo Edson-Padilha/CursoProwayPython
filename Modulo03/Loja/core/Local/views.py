@@ -28,7 +28,7 @@ def cadastra_estados(request):
         if form.is_valid():
             form.save()
         return redirect(lista_estados)
-    return render(request, 'cadastra_estado.html',{'estados': estado})
+    return render(request, 'cadastra_estado.html',{'estado': estado})
 
 def altera_estados(request,id):
     estado = Estado.objects.get(id=id)
@@ -43,14 +43,13 @@ def altera_estados(request,id):
 def exclui_estado(request):
     return render(request,'exclui_estados.html')
 
-def lista_cidades(request,id):
+def lista_cidades(request):
     procura = request.GET.get('procura')
 
     if procura:
         cidade = Cidade.objects.filter(nome__icontains=procura)
     else:
-        estado = Estado.objects.filter(id=id)
-        cidade = Cidade.objects.filter(estado_id=estado.id)
+        cidade = Cidade.objects.all()
     total = cidade.count
  
     dados ={
@@ -59,7 +58,7 @@ def lista_cidades(request,id):
         'procura': procura,
         'porPagina': efetua_paginacao(request, cidade)
     }
-    return HttpResponse(request,'lista_cidades.html',dados)
+    return render(request,'lista_cidades.html',dados)
 
 def cadastra_cidades(request):
     estado = Estado.objects.all()

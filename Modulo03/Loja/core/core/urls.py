@@ -77,3 +77,4 @@ urlpatterns = [
     path('',Inicio, name='inicio'),
 ]
 handler404 = 'core.views.pagina_inexistente'
+handler500 = 'core.views.erro_interno'
