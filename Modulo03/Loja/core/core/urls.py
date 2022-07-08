@@ -25,6 +25,7 @@ from Item.views import lista_categorias, cadastra_categorias, altera_categorias,
 from Item.views import lista_itens, cadastra_item, exclui_item
 from Local.views import lista_cidades, cadastra_cidades, altera_cidade, exclui_cidade, busca_cidades
 from Local.views import lista_estados, cadastra_estados, altera_estados, exclui_estado
+from Aplicacao.views import getMenu
 
 
 urlpatterns = [
@@ -74,7 +75,9 @@ urlpatterns = [
     path('exclui-estado/<int:id>', exclui_cidade),
     path('accounts/', include('django.contrib.auth.urls')),
     path('busca_cidades/<int:id>', busca_cidades),
+    path('getMenu/',getMenu),
     path('',Inicio, name='inicio'),
+
 ]
 handler404 = 'core.views.pagina_inexistente'
 handler500 = 'core.views.erro_interno'

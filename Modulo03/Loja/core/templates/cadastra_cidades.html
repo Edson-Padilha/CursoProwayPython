@@ -14,7 +14,7 @@
     </div>
     <div class="mb-3">
         <label for="nome" class="form-label">Nome</label>
-        <input type="text" name ="nome" class="form-control" id="nome" maxlength="100" required/>
+        <input type="text" name ="nome" class="form-control" id="nome" maxlength="50" required/>
     </div>
     <div class="mb-3">
         <label for="estado" class="form-control">Estado</label>
@@ -22,11 +22,12 @@
     
             <select id="estado" class="form-select" name="estado">
                 <option value="0">Selecione</option>
-                {% for uf in estados %}
-                    <option value="{{ uf.id }}">{{ uf.nome }}</option>
+                {% for uf in estado %}
+                    <option value="{{ uf.id }}">{{ uf.sigla }}</option>
                 {% endfor %}
 
             </select>
+        </select>
 
     
     {% include 'acoes_form.html' %} 

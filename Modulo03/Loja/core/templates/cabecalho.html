@@ -13,23 +13,33 @@
           <li class="nav-item">
             <a class="nav-link text-warning" aria-current="page" href="{% url 'contato' %}">Contato</a>
           </li>
+          {% if user.is_authenticated %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-warning" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Cadastros
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{% url 'lista-tipos-pessoa' %}">Tipo de Pessoa</a></li>
-              <li><a class="dropdown-item" href="{% url 'lista-clientes' %}">Clientes</a></li>
-              <li><a class="dropdown-item" href="{% url 'lista-fornecedores' %}">Fornecedores</a></li>
-              <li><a class="dropdown-item" href="{% url 'lista-usuarios' %}">Usuários</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'lista-categorias' %}">Categorias</a></li>
-              <li><a class="dropdown-item" href="{% url 'lista-itens' %}">Itens</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'lista-UF' %}">UF</a></li>
-              <li><a class="dropdown-item" href="{% url 'lista-cidades' %}">Cidades</a></li>
+          
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="itensMenu">  <script>
+              $('#navbarDropdown').click(
+                function(){
+                  $('#itensMenu').empty();
+                  
+            $.get('getMenu/',function(retorno){
+                retorno = retorno.replace('{','').replace('}','').split(',');
+                for (i = 0; i < retorno.length; i++){
+                    $('#itensMenu').append('<li><a class="dropdown-item" href="'+ retorno[i].substring(retorno[i].indexOf(':')+1).replace(/'/g,'').trim() + '">'+
+                      retorno[i].trim().substring(0,retorno[i].indexOf(':')).replace(':','').replace(/'/g,'').trim() + '</a></li>'); 
+                    //+ retorno[i].trim().substring(0,retorno[i].indexOf(':')).replace(':','') + '"/>' 
+                    //+ retorno[i].substring(retorno[i].indexOf(':')+1).replace(/'/g,'').trim() + '</option>');
+                }
+            })
+        })
+        
+            </script>
+             
             </ul>
           </li>
+          {% endif %}
         </ul>
         {% if user.is_authenticated %}
         <div class="btn-group" role="group">
